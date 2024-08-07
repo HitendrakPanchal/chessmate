@@ -1,3 +1,5 @@
+backend/src/utils/config.ts
+
 # Logs
 logs
 *.log
