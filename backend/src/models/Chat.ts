@@ -13,29 +13,29 @@
 
 // const Chat = mongoose.model<IChat>('Chat', ChatSchema);
 // export default Chat;
-// src/models/Chat.ts
-import mongoose, { Schema, Document } from 'mongoose';
+// src/models/Chat.ts 
+import  { Schema, Document, Types, model } from 'mongoose';
 
 export interface IMessage {
-  user: mongoose.Types.ObjectId;
+  user: Types.ObjectId;
   message: string;
 }
 
 export interface IChat extends Document {
-  gameId: mongoose.Types.ObjectId | string;
+  gameId: Types.ObjectId | string;
   messages: IMessage[];
 }
 
-const MessageSchema: Schema = new Schema({
-  user: { type: mongoose.Types.ObjectId, ref: 'User', required: true, },
+const MessageSchema: Schema = new Schema<IMessage>({
+  user: { type: Schema.ObjectId, ref: 'User', required: true, },
   message: { type: String, required: true }
 });
 
-const ChatSchema: Schema = new Schema({
-  gameId: { type: mongoose.Types.ObjectId, ref: 'Game', required: true },
+const ChatSchema: Schema = new Schema< IChat>({
+  gameId: { type: Schema.ObjectId, ref: 'Game', required: true },
   messages: [MessageSchema]
 });
 
-const Chat = mongoose.model<IChat>('Chat', ChatSchema);
+const Chat = model<IChat>('Chat', ChatSchema);
 
 export default Chat;

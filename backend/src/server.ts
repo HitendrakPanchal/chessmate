@@ -57,12 +57,12 @@ import authRoutes from './routes/authRoutes';
 import moveRoutes from './routes/moveRoutes';
 import { errorHandler } from './utils/errorHandler';
 // import { Game } from './models/Game';
-// import { createGame, getGameState } from './controllers/gameController';
-// import {  loginUser, registerUser } from './controllers/authController';
-// import { getChatsByGameId, addChatMessage } from './controllers/chatController';
-// import { getMovesByGameId, addMove } from './controllers/moveController';
-// import { verifyToken } from './utils/token';
-// import { validateRegister, validateLogin } from './utils/validate';
+import { createGame, getGameState, makeMove } from './controllers/gameController';
+import {  loginUser, registerUser } from './controllers/authController';
+import { getChatsByGameId, addChatMessage } from './controllers/chatController';
+import { getMovesByGameId, addMove } from './controllers/moveController';
+import { verifyToken } from './utils/token';
+import { validateRegister, validateLogin } from './utils/validate';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -81,30 +81,36 @@ app.use('/api/move', moveRoutes);
 app.use(errorHandler);
 
 
+app.get('/', (req, res) => {
+  res.send('Hello from your server!');
+});
 
-// // Post route to create a new game (already covered by gameRoutes)
-// app.post('/api/game', createGame);
+// Post route to create a new game (already covered by gameRoutes)
+app.post('/api/game', createGame);
 
-// // Get gamestate by id route (already covered by gameRoutes)
-// app.get('/api/game/state/:id', getGameState);
+// post route to make a move by id 
+app.post( '/api/game/move/:gameId', makeMove);
 
-// // Get route to get chat messages by game ID (already covered by chatRoutes)
-// app.get('/api/chat/:gameId', verifyToken, getChatsByGameId);
+// Get gamestate by id route (already covered by gameRoutes)
+app.get('/api/game/state/:id', getGameState);
 
-// // Post route to add a new chat message (already covered by chatRoutes)
-// app.post('/api/chat/:gameId', verifyToken, addChatMessage);
+// Get route to get chat messages by game ID (already covered by chatRoutes)
+app.get('/api/chat/:gameId', verifyToken, getChatsByGameId);
 
-// // Post route to register a new user (already covered by authRoutes)
-// app.post('/api/auth/register', validateRegister, registerUser);
+// Post route to add a new chat message (already covered by chatRoutes)
+app.post('/api/chat/:gameId', verifyToken, addChatMessage);
 
-// // Post route to authenticate a user and generate a token (already covered by authRoutes)
-// app.post('/api/auth/login', validateLogin, loginUser);
+// Post route to register a new user (already covered by authRoutes)
+app.post('/api/auth/register', validateRegister, registerUser);
 
-// // Get route to get moves by game ID (already covered by moveRoutes)
-// app.get('/api/move/:gameId', verifyToken, getMovesByGameId);
+// Post route to authenticate a user and generate a token (already covered by authRoutes)
+app.post('/api/auth/login', validateLogin, loginUser);
 
-// // Post route to add a new move (already covered by moveRoutes)
-// app.post('/api/move/:gameId', verifyToken, addMove);
+// Get route to get moves by game ID (already covered by moveRoutes)
+app.get('/api/move/:gameId', verifyToken, getMovesByGameId);
+
+// Post route to add a new move (already covered by moveRoutes)
+app.post('/api/move/:gameId', verifyToken, addMove);
 
 
 connectDB().then(() => {

@@ -15,7 +15,7 @@
 import express from 'express';
 import { registerUser, loginUser } from '../controllers/authController';
 import { validateRegister, validateLogin } from '../utils/validate';
-import { verifyToken } from '../utils/token';
+// import { verifyToken } from '../utils/token';
 const router = express.Router();
 
 // Route to register a new user

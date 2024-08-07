@@ -4,10 +4,19 @@
       "module": "commonjs",
       "outDir": "./dist",
       "rootDir": "./src",
-      "strict": true,
-      "esModuleInterop": true
+      "strict": false,
+      "esModuleInterop": true,
+      "baseUrl": "src", // Base directory to resolve non-relative module names
+      "paths": {
+      "@controllers/*": ["controllers/*"], // Alias for controllers directory
+      "@models/*": ["models/*"], // Alias for models directory
+      "@services/*": ["services/*"] // Alias for services directory
+      },
+      // other compiler options...
+
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    
   }
   

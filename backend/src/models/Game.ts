@@ -36,14 +36,33 @@
 // const Game = mongoose.model<IGame>('Game', GameSchema);
 // export default Game;
 
-// import exp from 'constants';
-import mongoose, {  Schema } from 'mongoose';
+// src/models/Game.ts
+import  { Schema, Document, model } from 'mongoose';
+
+
+export interface Game {
+  player1: string;
+  player2?: string;
+  status: string;
+  moves: string[];
+  // add fen
+  fen?: string;
+}
+
+interface IGame extends Document {
+  player1: string;
+  player2: string;
+  status: string;
+  moves: string[];
+  fen?: string;
+}
 
 const GameSchema: Schema = new Schema({
   player1: { type: String, required: true },
-  player2: { type: String, required: true },
-  status: { type: String, default: 'ongoing' },
+  player2: { type: String, default: null },
+  status: { type: String, default: 'waiting' },
   moves: { type: [String], default: [] },
+  fen: { type: String, default: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' },
 });
 
-export const Game = mongoose.model('Game', GameSchema);
+export const GameModel = model<IGame>('Game', GameSchema);

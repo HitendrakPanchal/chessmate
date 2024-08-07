@@ -27,7 +27,7 @@
 
 // src/controllers/authController.ts
 import { Request, Response } from 'express';
-import User from '../models/User';
+import {User, IUser} from '../models/User';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../utils/token';  // Utility for generating tokens
 // import jwt from 'jsonwebtoken';
@@ -51,13 +51,13 @@ export const registerUser = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({
-      name,
-      username,
-      email,
-      password: hashedPassword,
-    });
+    const newUser = new User<IUser>();
 
+    newUser.name = name;
+    newUser.username = username;
+    newUser.email = email;
+    newUser.password = hashedPassword;
+ 
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (error) {
@@ -82,6 +82,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     const token = generateToken(user._id as string);
     res.status(200).json({ token });
+
   } catch (error) {
     errorHandler(error, req, res, () => {});
   }

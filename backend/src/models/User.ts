@@ -40,7 +40,7 @@
 // export default User;
 // src/models/User.ts
 
-import mongoose, { Document, Schema } from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
 
 export interface IUser extends Document {
   name: string;
@@ -49,7 +49,7 @@ export interface IUser extends Document {
   password: string;
 }
 
-const userSchema: Schema = new Schema(
+const userSchema: Schema = new Schema<IUser>(
   {
     name: {
       type: String,
@@ -75,5 +75,6 @@ const userSchema: Schema = new Schema(
   }
 );
 
-const User = mongoose.model<IUser>('User', userSchema);
-export default User;
+export const User = model<IUser>('User', userSchema);
+
+// export  User;

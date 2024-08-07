@@ -13,7 +13,7 @@
 
 // src/routes/gameRoutes.ts
 import express from 'express';
-import { createGame, getGameState, updateGameState } from '../controllers/gameController';
+import { createGame, getGameState, makeMove } from '../controllers/gameController';
 
 const router = express.Router();
 
@@ -24,6 +24,7 @@ router.post('/', createGame);
 router.get('/state/:id', getGameState);
 
 // Route to update the state of a specific game by ID
-router.put('/:id', updateGameState);
+// router.put('/:id', updateGameState);
+router.post('/move/:gameId', makeMove);
 
 export default router;
